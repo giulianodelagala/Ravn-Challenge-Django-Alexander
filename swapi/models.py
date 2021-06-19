@@ -28,8 +28,8 @@ class People(models.Model):
     skin_color = models.CharField(max_length=20)
     birth_year = models.CharField(max_length=12)
     homeworld = models.ForeignKey(Planets, on_delete=models.CASCADE)
-    vehicles = models.ManyToManyField(Vehicles)
-    species = models.ManyToManyField(Species)
+    vehicles = models.ManyToManyField(Vehicles, blank=True)
+    species = models.ManyToManyField(Species, blank=True)
 
     def __str__(self):
         return self.name
