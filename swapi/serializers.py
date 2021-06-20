@@ -11,6 +11,7 @@ class PeopleSerializer(serializers.ModelSerializer):
     class Meta:
         model = People
         fields = [
+            'id',
             'name',
             'eye_color',
             'hair_color',

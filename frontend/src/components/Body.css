@@ -1,0 +1,24 @@
+#sidenav {
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    height: 100vh;
+  }
+
+h2 {
+font-size: 17pt;
+}
+
+h2.emp {
+  color: rgba(0, 0, 0, 0.15);
+}
+
+h2.tr{
+  text-align: right;
+}
+
+.p1 {
+font-size: 14pt;
+}
+
+.p1.emp {
+color: rgba(0, 0, 0, 0.15);
+}
