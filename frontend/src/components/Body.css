@@ -1,4 +1,4 @@
-#sidenav {
+#sidebody {
     border-right: 1px solid rgba(0, 0, 0, 0.15);
     height: 100vh;
   }
@@ -21,4 +21,13 @@ font-size: 14pt;
 
 .p1.emp {
 color: rgba(0, 0, 0, 0.15);
+}
+
+.SectionHeader {
+  padding:  32pt 16pt 8pt;
+}
+
+.LoadingCell {
+  padding: 16pt;
+  text-align: center;
 }

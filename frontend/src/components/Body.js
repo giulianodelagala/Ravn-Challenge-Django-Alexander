@@ -2,16 +2,39 @@ import React, { Component } from "react";
 import './Body.css'
 import PersonCell from './PersonCell'
 
+const API = 'http://localhost:8000/';
+const QUERY_PEOPLE = 'people/'
+
 class Body extends Component{
 
     constructor(props){
         super(props);
 
         this.state = {
-            selectedPerson : null
-            
+            selectedPerson : null,
+            People : [],
+            isLoading : false,
         }
+  
     }
+
+    componentDidMount(){
+        this.setState( {isLoading: true});
+        this.fetchPeople();
+    }
+
+
+    fetchPeople() {
+    
+        fetch(API + QUERY_PEOPLE)
+        .then(response => response.json())
+        .then(data => {
+            setTimeout( function () {
+                this.setState({People: data, isLoading: false});
+            }.bind(this),1000 );
+        //setTimeout for test only
+        }); 
+    };
 
     onPersonSelect(person){
         this.setState({selectedPerson:person});
@@ -31,7 +54,9 @@ class Body extends Component{
         
             return (
                 <div>
-                    <h2>General Information</h2>
+                    <div className="SectionHeader">
+                        <h2 >General Information</h2>
+                    </div>
                         <ul>
                             <li className="row">
                                 <h2 className="emp col-6">Eye Color</h2>
@@ -59,8 +84,6 @@ class Body extends Component{
                     <ul>
                         {vehicles}
                     </ul>
-                    
-                    
                 </div>
             );
         }
@@ -69,19 +92,29 @@ class Body extends Component{
     }
 
     render(){
-        const people = this.props.people.map( (person) => {
-            return (
-                <div key={person.id}
-                    onClick = { () => this.onPersonSelect(person)} >                  
-                    <PersonCell              
-                        person={person} />        
-                </div>
-            );
-        } );
+        var people = null;
+        if (this.state.isLoading) {
+            people =          
+                <div className="LoadingCell">
+                    <h2 className="emp">Loading</h2>
+                </div>               
+        }
+        else{
+            people = this.state.People.map( (person) => {
+                return (
+                    <div key={person.id}
+                        onClick = { () => this.onPersonSelect(person)} >                  
+                        <PersonCell              
+                            person={person} />        
+                    </div>
+                );
+            } );
+        }
+        
 
         return(
             <div className="row">
-                <div id="sidenav" className="col-3">
+                <div id="sidebody" className="col-3">
                     {people}
                 </div>
                 <div className="col-9">
@@ -91,6 +124,8 @@ class Body extends Component{
             
             
         );
+        
+        
     }
 }
 
