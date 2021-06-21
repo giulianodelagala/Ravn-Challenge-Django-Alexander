@@ -5,7 +5,7 @@ import PersonCell from './PersonCell'
 import DataCell from "./DataCell";
 
 const API = 'http://localhost:8000/';
-const QUERY_PEOPLE = 'people/'
+const QUERY_PEOPLE = 'people/?page='
 
 class Body extends Component{
 
@@ -28,13 +28,13 @@ class Body extends Component{
 
     fetchPeople() {
     
-        fetch(API + QUERY_PEOPLE)
+        fetch(API + QUERY_PEOPLE + '1')
         .then(response => response.json())
         .then(data => {
             setTimeout( function () {
-                this.setState({People: data, isLoading: false});
+                this.setState({People: data.results, isLoading: false});
             }.bind(this),1000 );
-        //setTimeout for test only
+        console.log(data)
         }); 
     };
 
