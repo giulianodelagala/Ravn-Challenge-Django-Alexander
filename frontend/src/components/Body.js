@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import LoadingIndicator from 'react-loading-indicator'
 import './Body.css'
-import PersonCell from './PersonCell'
+
+import InfiniteScroll from 'react-infinite-scroll-component'
+
 import DataCell from "./DataCell";
+import PersonCell from './PersonCell'
+import LoadingCell from './LoadingCell'
 
 const API = 'http://localhost:8000/';
 const QUERY_PEOPLE = 'people/?page='
@@ -16,8 +19,10 @@ class Body extends Component{
             selectedPerson : null,
             People : [],
             isLoading : false,
+            hasMore: true,
+            page: 1
         }
-  
+        this.fetchPeople = this.fetchPeople.bind(this);
     }
 
     componentDidMount(){
@@ -25,17 +30,24 @@ class Body extends Component{
         this.fetchPeople();
     }
 
-
     fetchPeople() {
-    
-        fetch(API + QUERY_PEOPLE + '1')
+        if (this.state.People.length >= 20) {
+            this.setState({ hasMore: false });
+            return;
+        }
+        fetch(API + QUERY_PEOPLE + this.state.page)
         .then(response => response.json())
         .then(data => {
+            // fake async 1.5sec
             setTimeout( function () {
-                this.setState({People: data.results, isLoading: false});
-            }.bind(this),1000 );
+                this.setState({
+                    People: this.state.People.concat(data.results),
+                    isLoading: false,
+                    page: this.state.page + 1,
+                });
+                }.bind(this), 1500 );
         console.log(data)
-        }); 
+        });
     };
 
     onPersonSelect(person){
@@ -51,7 +63,7 @@ class Body extends Component{
                     <DataCell cell={ {attribute: vehicle, value: ''}}/>
                 );
             } );
-        
+
             return (
                 <div className="offset-1 col-10">
                     <div className="SectionHeader">
@@ -63,7 +75,7 @@ class Body extends Component{
                         <DataCell cell={ {attribute:"Skin Color", value: person.skin_color}}/>
                         <DataCell cell={ {attribute:"Birth Year", value: person.birth_year}}/>
                     </ul>
-                                       
+
                     <div className="SectionHeader">
                         <h2 >Vehicles</h2>
                     </div>
@@ -80,23 +92,32 @@ class Body extends Component{
     render(){
         var people = null;
         if (this.state.isLoading) {
-            people =          
-                <div className="LoadingCell">
-                    <h2 className="emp"><LoadingIndicator className="LoadingIndicator" />Loading</h2>
-                </div>               
+            people = <LoadingCell/>
         }
         else{
-            people = this.state.People.map( (person) => {
-                return (
-                    <div key={person.id}
-                        onClick = { () => this.onPersonSelect(person)} >                  
-                        <PersonCell              
-                            person={person} />        
-                    </div>
-                );
-            } );
+            people =      
+                    <InfiniteScroll
+                        dataLength={this.state.People.length}
+                        next={this.fetchPeople}
+                        hasMore={this.state.hasMore}
+                        loader= {<LoadingCell/>}
+                        height={480}
+                        endMessage={
+                            <p style={{ textAlign: "center" }}>
+                            <b>Yay! You have seen it all</b>
+                            </p>
+                        }
+                        >
+                        {this.state.People.map((index) => (
+                            <div key={index.id}
+                            onClick = { () => this.onPersonSelect(index)} >
+                                 <PersonCell
+                                 person={index} />
+                            </div>
+                        ))}
+                    </InfiniteScroll>
         }
-        
+
 
         return(
             <div className="row">
@@ -107,11 +128,11 @@ class Body extends Component{
                     {this.renderPerson(this.state.selectedPerson)}
                 </div>
             </div>
-            
-            
+
+
         );
-        
-        
+
+
     }
 }
 

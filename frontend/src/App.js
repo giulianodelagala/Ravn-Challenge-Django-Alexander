@@ -27,7 +27,7 @@ class App extends Component {
           </div>
         </Navbar>
        
-        <div>
+        <div className="Content">
           <Body people={this.state.people}/>
         </div>
     

@@ -3,6 +3,7 @@
     height: 100vh;
     margin: 0pt;
     padding: 0pt;
+    overflow-y: auto;
   }
 
 hr {
