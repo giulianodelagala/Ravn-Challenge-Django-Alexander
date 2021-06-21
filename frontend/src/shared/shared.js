@@ -1,3 +1,5 @@
+//Only for initial tests
+
 export const PEOPLE = 
     [
         {
