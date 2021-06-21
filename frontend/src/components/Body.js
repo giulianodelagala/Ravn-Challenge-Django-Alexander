@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import LoadingIndicator from 'react-loading-indicator'
 import './Body.css'
 import PersonCell from './PersonCell'
+import DataCell from "./DataCell";
 
 const API = 'http://localhost:8000/';
 const QUERY_PEOPLE = 'people/'
@@ -47,14 +48,7 @@ class Body extends Component{
         {
             const vehicles = person.vehicles.map( (vehicle) => {
                 return (
-                    // <li>
-                    //     {vehicle}
-                    // </li>
-                    <li className="DataCell row">
-                        <h2 className="emp col-6">{vehicle}</h2>
-                        <h2 className="tr col-6"></h2>
-                        <hr className="col-12"/>
-                    </li>
+                    <DataCell cell={ {attribute: vehicle, value: ''}}/>
                 );
             } );
         
@@ -63,31 +57,13 @@ class Body extends Component{
                     <div className="SectionHeader">
                         <h2 >General Information</h2>
                     </div>
-                    {/* <div className="SectionContent"> */}
-                        <ul>
-                                <li className="DataCell row">
-                                    <h2 className="emp col-6">Eye Color</h2>
-                                    <h2 className="tr col-6">{person.eye_color}</h2>
-                                    <hr className="col-12"/>
-                                </li>
-                                <li className="DataCell row">
-                                    <h2 className="emp col-6">Hair Color</h2>
-                                    <h2 className="tr col-6">{person.hair_color}</h2>
-                                    <hr className="col-12"/>
-                                </li>
-                                <li className="DataCell row">
-                                    <h2 className="emp col-6">Skin Color</h2>
-                                    <h2 className="tr col-6">{person.skin_color}</h2>
-                                    <hr className="col-12"/>
-                                </li>
-                                <li className="DataCell row">
-                                    <h2 className="emp col-6">Birth Year</h2>
-                                    <h2 className="tr col-6">{person.birth_year}</h2>
-                                    <hr className="col-12"/>
-                                </li>                       
-                            </ul>
-                    {/* </div> */}
-                        
+                    <ul>
+                        <DataCell cell={ {attribute:"Eye Color", value: person.eye_color}}/>
+                        <DataCell cell={ {attribute:"Hair Color", value: person.hair_color}}/>
+                        <DataCell cell={ {attribute:"Skin Color", value: person.skin_color}}/>
+                        <DataCell cell={ {attribute:"Birth Year", value: person.birth_year}}/>
+                    </ul>
+                                       
                     <div className="SectionHeader">
                         <h2 >Vehicles</h2>
                     </div>
