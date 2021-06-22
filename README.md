@@ -15,6 +15,13 @@ Ravn Django Code Challenge
 * Bootstrap (reactstrap)
 * [infinite scroll component](https://www.npmjs.com/package/react-infinite-scroll-component) 
 
+### Setup/Running
+1. Clone this repository
+1. `docker-compose build`
+1. `docker-compose up`
+1. There should now be two servers running:
+* http://127.0.0.1:8000 is the Django-rest server
+* http://127.0.0.1:3000 is the React app
 
 ### Folder Structure
 
@@ -23,13 +30,3 @@ Ravn Django Code Challenge
             ├── challenge               # django-rest files
             ├── frontend                # React files
             │   ├── src                
-
-### Setup/Running
-#### Backend
-In *root* folder
-> python manage.py runserver
-
-#### Frontend
-In *frontend* folder
-> yarn start
-
