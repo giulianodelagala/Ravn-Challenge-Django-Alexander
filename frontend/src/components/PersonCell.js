@@ -3,13 +3,7 @@ import './Body.css'
 
 class PersonCell extends Component {
 
-    // constructor(props) {
-    //     super(props);
-
-    //     this.state = {
-    //         person: null
-    //     }
-    // }
+    
     
     render() {
         const person = this.props.person;

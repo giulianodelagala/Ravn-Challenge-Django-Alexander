@@ -3,9 +3,10 @@ import './Body.css'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-import DataCell from "./DataCell";
 import PersonCell from './PersonCell'
 import LoadingCell from './LoadingCell'
+import PersonAttribute from "./PersonAttribute";
+import NoticeCell from "./NoticeCell";
 
 const API = 'http://localhost:8000/';
 const QUERY_PEOPLE = 'people/?page='
@@ -20,7 +21,8 @@ class Body extends Component{
             People : [],
             isLoading : false,
             hasMore: true,
-            page: 1
+            page: 1,
+            error: null
         }
         this.fetchPeople = this.fetchPeople.bind(this);
     }
@@ -36,7 +38,12 @@ class Body extends Component{
             return;
         }
         fetch(API + QUERY_PEOPLE + this.state.page)
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok)
+                return response.json();
+            else
+                throw new Error('Something went wrong ...');
+            })          
         .then(data => {
             // fake async 1.5sec
             setTimeout( function () {
@@ -46,56 +53,26 @@ class Body extends Component{
                     page: this.state.page + 1,
                 });
                 }.bind(this), 1500 );
-        console.log(data)
-        });
+        })
+        .catch(error => this.setState({ error, isLoading: false }));
+        ;
     };
 
     onPersonSelect(person){
         this.setState({selectedPerson:person});
-        console.log(person.name);
-    }
-
-    renderPerson(person){
-        if (person != null)
-        {
-            const vehicles = person.vehicles.map( (vehicle) => {
-                return (
-                    <DataCell cell={ {attribute: vehicle, value: ''}}/>
-                );
-            } );
-
-            return (
-                <div className="offset-1 col-10">
-                    <div className="SectionHeader">
-                        <h2 >General Information</h2>
-                    </div>
-                    <ul>
-                        <DataCell cell={ {attribute:"Eye Color", value: person.eye_color}}/>
-                        <DataCell cell={ {attribute:"Hair Color", value: person.hair_color}}/>
-                        <DataCell cell={ {attribute:"Skin Color", value: person.skin_color}}/>
-                        <DataCell cell={ {attribute:"Birth Year", value: person.birth_year}}/>
-                    </ul>
-
-                    <div className="SectionHeader">
-                        <h2 >Vehicles</h2>
-                    </div>
-                    <ul>
-                        {vehicles}
-                    </ul>
-                </div>
-            );
-        }
-        else
-            return ( <div></div>);
+        //console.log(person.name);
     }
 
     render(){
-        var people = null;
-        if (this.state.isLoading) {
-            people = <LoadingCell/>
+        var sidebar = null;
+        if (this.state.error) {
+            sidebar = <NoticeCell/>
+        }
+        else if (this.state.isLoading) {
+            sidebar = <LoadingCell/>
         }
         else{
-            people =      
+            sidebar =      
                     <InfiniteScroll
                         dataLength={this.state.People.length}
                         next={this.fetchPeople}
@@ -118,21 +95,16 @@ class Body extends Component{
                     </InfiniteScroll>
         }
 
-
         return(
             <div className="row">
                 <div id="sidebody" className="col-3">
-                    {people}
+                    {sidebar}
                 </div>
                 <div className="col-9">
-                    {this.renderPerson(this.state.selectedPerson)}
+                    <PersonAttribute selected={this.state.selectedPerson}/>
                 </div>
             </div>
-
-
         );
-
-
     }
 }
 

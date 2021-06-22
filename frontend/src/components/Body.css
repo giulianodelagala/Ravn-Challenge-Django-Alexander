@@ -21,6 +21,10 @@ h2.emp {
   color: rgba(0, 0, 0, 0.3);
 }
 
+h2.highemp {
+  color:rgba(235, 87, 87, 1)
+}
+
 h2.tr{
   text-align: right;
   padding-right: 16pt;
@@ -76,4 +80,9 @@ color: rgba(0, 0, 0, 0.15);
   margin-bottom: 16pt;
   align-content: center;
   vertical-align: center;
+}
+
+.NoticeCell {
+  padding: 16pt;
+  text-align: center;
 }
