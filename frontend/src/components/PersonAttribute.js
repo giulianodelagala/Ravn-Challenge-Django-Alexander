@@ -3,9 +3,7 @@ import './Body.css'
 
 import DataCell from "./DataCell";
 
-
-const API = 'http://localhost:8000/';
-const QUERY_PERSON = 'person/'
+import { API, QUERY_PERSON } from '../shared/shared'
 
 class PersonAttribute extends Component{
 

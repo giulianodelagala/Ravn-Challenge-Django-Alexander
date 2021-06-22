@@ -8,8 +8,7 @@ import LoadingCell from './LoadingCell'
 import PersonAttribute from "./PersonAttribute";
 import NoticeCell from "./NoticeCell";
 
-const API = 'http://localhost:8000/';
-const QUERY_PEOPLE = 'people/?page='
+import { API, QUERY_PEOPLE } from '../shared/shared'
 
 class Body extends Component{
 

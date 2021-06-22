@@ -1,5 +1,8 @@
-//Only for initial tests
+export const API = 'http://localhost:8000/';
+export const QUERY_PEOPLE = 'people/?page='
+export const QUERY_PERSON = 'person/'
 
+//Only for initial tests
 export const PEOPLE = 
     [
         {
@@ -32,3 +35,4 @@ export const PEOPLE =
             ]
         }
     ];
+
