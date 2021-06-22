@@ -1,6 +1,10 @@
 # Ravn-Challenge-Django-Alexander
 Ravn Django Code Challenge
 
+![RavnChallenge](/gif/RavnChallenge.gif)
+
+<!--img src="/gif/RavnChallenge.gif" width="250" height="250"/-->
+
 ### Technologies Used
 #### Backend
 * Python 3.8
