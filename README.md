@@ -1,2 +1,8 @@
 # Ravn-Challenge-Django-Alexander
-Ravn Challenge Django
+Ravn Django Code Challenge
+## Technologies Used
+### Backend
+* Django-rest 
+### Frontend
+* JS React
+* [infinite scroll component](https://www.npmjs.com/package/react-infinite-scroll-component) 
